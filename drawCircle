@@ -1,0 +1,28 @@
+import pygame, sys
+from pygame.locals import *
+
+pygame.init()
+screen=pygame.display.set_mode((600,400))
+WHITE=(255,255,255)
+BLACK=(0,0,0)
+
+FPS = pygame.time.Clock()
+size=screen.get_size()
+
+
+#screen 의 가로세로 중간점 구하기 
+hw, hh = (size[0]//2, size[1]//2)
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    screen.fill(WHITE)
+
+    pygame.draw.line(screen,BLACK, (0,hh),(size[0],hh),1)
+    pygame.draw.line(screen,BLACK, (hw,0),(hw,size[1]),1)
+    pygame.draw.circle(screen,BLACK,(hw,hh),100,1)
+    pygame.display.update()
+    FPS.tick(24)
