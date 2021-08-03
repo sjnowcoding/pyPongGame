@@ -1,0 +1,45 @@
+import pygame, sys
+from pygame.locals import *
+from math import sin,cos,radians, pi
+import random
+
+pygame.init()
+screen=pygame.display.set_mode((600,400))
+WHITE=(255,255,255); BLACK = (0,0,0)
+FPS = pygame.time.Clock()
+size=screen.get_size()
+class Ball:
+    def __init__(self):
+
+        #방향을 라디안으로 설정하기
+        self.direction = (pi/3)+(pi/3)*random.random() 
+        
+        self.dx=int( 10*sin(self.direction) )
+        self.dy=int( 10*cos(self.direction) )
+
+        self.x=size[0]//2 #screen size의 반
+        self.y=size[1]//2
+        self.r=10
+
+    def setNextPosition(self):
+        self.x += self.dx
+        self.y += self.dy
+
+    def draw(self):
+        pygame.draw.circle(screen,BLACK,(self.x, self.y),self.r,0)
+
+
+B = Ball()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    screen.fill(WHITE)
+    B.setNextPosition()
+    B.draw()
+
+    pygame.display.update()
+    FPS.tick(24)
