@@ -1,0 +1,48 @@
+import pygame, sys
+from pygame.locals import *
+pygame.init()
+screen=pygame.display.set_mode((600,400))
+
+WHITE=(255,255,255)
+BLACK = (0,0,0)
+
+FPS = pygame.time.Clock()
+size=screen.get_size()
+
+class Bar:
+    def __init__(self,kb,x):
+        self.kb=kb
+        self.x=x
+        self.y=size[1]//2
+
+    def move(self,pk): #pressed_keys
+        if pk[self.kb[0]]:
+            self.y-=10
+        if pk[self.kb[1]]:
+            self.y+=10
+
+        #drawing
+        pygame.draw.line(screen,
+                         BLACK,
+                         (self.x, self.y-40),
+                         (self.x,self.y+40),
+                         6)
+
+#Bar객체를 생성하여 Bars리스트에 담기
+Bars = [Bar((K_a,K_z),10),  Bar((K_UP, K_DOWN),590) ]
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    pressedKey=pygame.key.get_pressed()
+    screen.fill(WHITE)
+     
+    #입력된 키를 이용하여 Bar를 화면에 보여주는 코드 작성하기 
+    for b in Bars:
+        b.move(pressedKey)
+    
+    pygame.display.update()
+    FPS.tick(24)
